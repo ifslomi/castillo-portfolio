@@ -1,0 +1,39 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2a2a2a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0" y1="0" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#aaaaaa"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="180" height="180" rx="40" fill="url(#bgGradient)"/>
+  
+  <!-- Subtle Grid Pattern -->
+  <path d="M 0 45 L 180 45 M 0 90 L 180 90 M 0 135 L 180 135 M 45 0 L 45 180 M 90 0 L 90 180 M 135 0 L 135 180" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+
+  <!-- Corner Dots -->
+  <circle cx="24" cy="24" r="3" fill="#ffffff" fill-opacity="0.2"/>
+  <circle cx="156" cy="24" r="3" fill="#ffffff" fill-opacity="0.2"/>
+  <circle cx="24" cy="156" r="3" fill="#ffffff" fill-opacity="0.2"/>
+  <circle cx="156" cy="156" r="3" fill="#ffffff" fill-opacity="0.2"/>
+
+  <!-- Developer Brackets Accent -->
+  <path d="M 60 146 L 34 146 L 34 120" fill="none" stroke="#666" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 120 34 L 146 34 L 146 60" fill="none" stroke="#666" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Center Text -->
+  <!-- Using dy="0.35em" is the most reliable cross-browser way to vertically center text without relying on dominant-baseline -->
+  <text x="50%" y="50%" dy="0.35em" font-family="'Inter', 'Segoe UI', -apple-system, sans-serif" font-weight="800" font-size="76" fill="url(#textGradient)" text-anchor="middle" letter-spacing="-2" filter="url(#glow)">JC</text>
+  
+  <!-- Decorative center dot -->
+  <circle cx="90" cy="130" r="3" fill="#888"/>
+</svg>
