@@ -8,6 +8,8 @@ import { BackgroundDecor } from "@/components/BackgroundDecor";
 import { RecommendationsSlider } from "@/components/RecommendationsSlider";
 import { ContactBlock } from "@/components/ContactBlock";
 import { Link } from "wouter";
+import { GitHubCalendar } from "react-github-calendar";
+import { useTheme } from "next-themes";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   Mail,
@@ -134,7 +136,7 @@ function GalleryModal({
 
       <button
         onClick={(e) => { e.stopPropagation(); onPrev(); }}
-        className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+        className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all z-10 cursor-pointer active:scale-90"
         aria-label="Previous"
       >
         <ChevronLeft className="w-5 h-5" />
@@ -142,7 +144,7 @@ function GalleryModal({
 
       <button
         onClick={(e) => { e.stopPropagation(); onNext(); }}
-        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all z-10 cursor-pointer active:scale-90"
         aria-label="Next"
       >
         <ChevronRight className="w-5 h-5" />
@@ -174,19 +176,19 @@ function GalleryModal({
 }
 
 export default function Home() {
+  const { theme } = useTheme();
   const galleryRef = useRef<HTMLDivElement>(null);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_DATA.projects[0] | null>(null);
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [githubIndex, setGithubIndex] = useState(0);
-
   const githubAccounts = ["ifjames", "ifslomi", "ifsunreal"];
   const currentGithub = githubAccounts[githubIndex];
 
   const nextGithub = () => setGithubIndex((prev) => (prev + 1) % githubAccounts.length);
   const prevGithub = () => setGithubIndex((prev) => (prev - 1 + githubAccounts.length) % githubAccounts.length);
 
-  const { personal, highlightPill, about, techStack, projects, experience } = PORTFOLIO_DATA;
+  const { personal, highlightPill, about, expertTechStack, projects, experience } = PORTFOLIO_DATA;
 
   const scrollGallery = (direction: "left" | "right") => {
     if (!galleryRef.current) return;
@@ -225,10 +227,10 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
-            className="relative w-28 h-28 md:w-32 md:h-32 shrink-0 rounded-3xl overflow-hidden border border-border/50 shadow-2xl"
+            className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-[2rem] overflow-hidden border border-border/50 shadow-2xl"
           >
             <AvatarSwitcher className="w-full h-full" />
-            <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 dark:ring-white/5 pointer-events-none" />
+            <div className="absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/10 dark:ring-white/5 pointer-events-none" />
           </motion.div>
 
           <div className="flex-1 flex flex-col justify-center relative z-10">
@@ -267,7 +269,7 @@ export default function Home() {
                 <a href={`mailto:${personal.email}`} className="inline-flex items-center gap-1.5 bg-background/80 backdrop-blur border border-border text-foreground px-4 py-2 rounded-full text-xs font-medium hover:bg-secondary transition-colors">
                   <Mail className="w-3.5 h-3.5" /> Send Email
                 </a>
-                <button onClick={() => setShowResumeModal(true)} className="inline-flex items-center gap-1.5 bg-background/80 backdrop-blur border border-border text-foreground px-4 py-2 rounded-full text-xs font-medium hover:bg-secondary transition-colors">
+                <button onClick={() => setShowResumeModal(true)} className="inline-flex items-center gap-1.5 bg-background/80 backdrop-blur border border-border text-foreground px-4 py-2 rounded-full text-xs font-medium hover:bg-secondary transition-all cursor-pointer active:scale-95">
                   <FileText className="w-3.5 h-3.5" /> View Resume
                 </button>
               </div>
@@ -298,9 +300,14 @@ export default function Home() {
             {/* Tech Stack */}
             <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative pl-5 border-l-2 border-border/50">
               <div className="absolute top-0 -left-[2px] w-[2px] h-6 bg-primary rounded-full shadow-[0_0_8px_rgba(var(--primary),0.8)]" />
-              <h2 className="text-xl font-bold text-foreground mb-6 tracking-tight">Tech Stack</h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-foreground tracking-tight">Tech Stack</h2>
+                <Link href="/tech" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group">
+                  View All <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
               <div className="space-y-6">
-                {Object.entries(techStack).map(([category, items]) => (
+                {Object.entries(expertTechStack).map(([category, items]) => (
                   <div key={category} className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6">
                     <span className="text-xs font-bold text-foreground/60 uppercase tracking-widest w-24 shrink-0">{category}</span>
                     <div className="flex flex-wrap gap-2">
@@ -328,7 +335,7 @@ export default function Home() {
                   <button
                     key={project.id}
                     onClick={() => setSelectedProject(project)}
-                    className="group relative block p-4 rounded-xl bg-card/80 backdrop-blur border border-border/60 hover:border-border hover:shadow-md transition-all hover:-translate-y-1 overflow-hidden w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    className="group relative block p-4 rounded-xl bg-card/80 backdrop-blur border border-border/60 hover:border-border hover:shadow-md transition-all hover:-translate-y-1 overflow-hidden w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-[0.98]"
                   >
                     <div className="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-primary/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative flex justify-between items-start gap-2 mb-1.5">
@@ -356,12 +363,11 @@ export default function Home() {
               </div>
               <div className="space-y-2">
                 {PORTFOLIO_DATA.certifications.slice(0, 4).map((cert) => (
-                  <div key={cert.id} className="group p-3 rounded-lg bg-card/80 backdrop-blur border border-border/40 hover:bg-secondary/60 transition-colors flex items-center justify-between gap-2 relative overflow-hidden">
+                  <div key={cert.id} className="group p-3 rounded-lg bg-card/80 backdrop-blur border border-border/40 hover:bg-secondary/60 transition-colors flex items-center justify-between gap-2 relative overflow-hidden cursor-pointer">
                     <div>
                       <div className="font-semibold text-foreground text-xs group-hover:translate-x-1 transition-transform">{cert.title}</div>
                       <div className="text-[11px] text-muted-foreground group-hover:translate-x-1 transition-transform delay-75">{cert.issuer}</div>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 -translate-x-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 hidden sm:block" />
                   </div>
                 ))}
               </div>
@@ -378,26 +384,22 @@ export default function Home() {
 
             {/* Experience */}
             <section>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-bold text-foreground">Experience</h2>
                 <Link href="/experience" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group">
                   More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-              <div className="space-y-4">
-                {experience.map((item) => (
-                  <div key={item.id} className="group flex gap-3">
-                    <div className="mt-1 shrink-0">
-                      <div className="w-4 h-4 rounded bg-foreground text-background flex items-center justify-center">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                      </div>
-                    </div>
-                    <div className="flex-1 group-hover:translate-x-1 transition-transform">
+              <div className="space-y-6 border-l border-border/60 pl-5 ml-1.5">
+                {experience.map((item, index) => (
+                  <div key={item.id} className="relative group">
+                    <div className={`absolute -left-[26px] top-1 w-3 h-3 rounded-[2px] border-[1.5px] border-foreground transition-colors duration-300 ${index === 0 ? 'bg-foreground' : 'bg-background group-hover:bg-foreground/20'}`} />
+                    <div className="flex flex-col gap-0.5 group-hover:translate-x-1 transition-transform">
                       <div className="flex justify-between items-start gap-2">
-                        <h4 className="font-semibold text-foreground text-xs leading-tight">{item.title}</h4>
-                        <span className="text-[10px] text-muted-foreground font-mono shrink-0">{item.period.split(" – ")[1] || item.period}</span>
+                        <h4 className="font-semibold text-foreground text-[13px] leading-tight">{item.title}</h4>
+                        <span className="text-[11px] text-muted-foreground whitespace-nowrap font-medium">{item.period.split(" – ")[1] || item.period}</span>
                       </div>
-                      <p className="text-[11px] text-muted-foreground mt-0.5">{item.company}</p>
+                      <p className="text-[12px] text-foreground/80">{item.company}</p>
                     </div>
                   </div>
                 ))}
@@ -406,26 +408,22 @@ export default function Home() {
 
             {/* Education */}
             <section>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-bold text-foreground">Education</h2>
                 <Link href="/experience" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group">
                   More <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
-              <div className="space-y-4">
-                {PORTFOLIO_DATA.education.map((item) => (
-                  <div key={item.id} className="group flex gap-3">
-                    <div className="mt-1 shrink-0">
-                      <div className="w-4 h-4 rounded bg-foreground text-background flex items-center justify-center shadow-sm">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                      </div>
-                    </div>
-                    <div className="flex-1 group-hover:translate-x-1 transition-transform">
+              <div className="space-y-6 border-l border-border/60 pl-5 ml-1.5">
+                {PORTFOLIO_DATA.education.map((item, index) => (
+                  <div key={item.id} className="relative group">
+                    <div className={`absolute -left-[26px] top-1 w-3 h-3 rounded-[2px] border-[1.5px] border-foreground transition-colors duration-300 ${index === 0 ? 'bg-foreground' : 'bg-background group-hover:bg-foreground/20'}`} />
+                    <div className="flex flex-col gap-0.5 group-hover:translate-x-1 transition-transform">
                       <div className="flex justify-between items-start gap-2">
-                        <h4 className="font-semibold text-foreground text-xs leading-tight">{item.title}</h4>
-                        <span className="text-[10px] text-muted-foreground font-mono shrink-0">{item.period.split(" – ")[1] || item.period}</span>
+                        <h4 className="font-semibold text-foreground text-[13px] leading-tight">{item.title}</h4>
+                        <span className="text-[11px] text-muted-foreground whitespace-nowrap font-medium">{item.period.split(" – ")[1] || item.period}</span>
                       </div>
-                      <p className="text-[11px] text-muted-foreground mt-0.5">{item.company}</p>
+                      <p className="text-[12px] text-foreground/80">{item.company}</p>
                     </div>
                   </div>
                 ))}
@@ -440,32 +438,41 @@ export default function Home() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-foreground">GitHub Contributions</h2>
                 <div className="flex items-center gap-1.5 bg-secondary/50 rounded-full p-1 border border-border/50">
-                  <button onClick={prevGithub} className="w-6 h-6 rounded-full bg-background text-muted-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors shadow-sm">
+                  <button onClick={prevGithub} className="w-6 h-6 rounded-full bg-background text-muted-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-all shadow-sm cursor-pointer active:scale-90">
                     <ChevronLeft className="w-3.5 h-3.5" />
                   </button>
                   <a href={`https://github.com/${currentGithub}`} target="_blank" rel="noopener noreferrer" className="text-xs font-mono font-medium text-foreground hover:text-primary transition-colors flex items-center justify-center gap-1 w-[80px]">
                     @{currentGithub}
                   </a>
-                  <button onClick={nextGithub} className="w-6 h-6 rounded-full bg-background text-muted-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-colors shadow-sm">
+                  <button onClick={nextGithub} className="w-6 h-6 rounded-full bg-background text-muted-foreground flex items-center justify-center hover:bg-foreground hover:text-background transition-all shadow-sm cursor-pointer active:scale-90">
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
-              <div className="rounded-xl border border-border/60 bg-card/80 backdrop-blur p-4 overflow-hidden hover:border-border hover:shadow-md transition-all relative min-h-[160px]">
+              <div className="rounded-xl border border-border/60 bg-card/80 backdrop-blur p-4 sm:p-6 overflow-hidden hover:border-border hover:shadow-md transition-all relative min-h-[160px]">
                 <a href={`https://github.com/${currentGithub}`} target="_blank" rel="noopener noreferrer" className="block focus:outline-none h-full">
-                  <div className="w-full h-full overflow-x-auto no-scrollbar flex items-center group">
-                    <AnimatePresence mode="wait">
-                      <motion.img 
-                        key={currentGithub}
-                        initial={{ opacity: 0, filter: "blur(4px)" }}
-                        animate={{ opacity: 1, filter: "blur(0px)" }}
-                        exit={{ opacity: 0, filter: "blur(4px)" }}
-                        transition={{ duration: 0.3 }}
-                        src={`https://ghchart.rshah.org/${currentGithub}`} 
-                        alt={`${currentGithub}'s GitHub Contribution Graph`} 
-                        className="min-w-[700px] w-full object-contain dark:invert dark:hue-rotate-180 opacity-90 group-hover:opacity-100 transition-opacity"
-                      />
-                    </AnimatePresence>
+                  <div className="w-full h-full overflow-x-auto no-scrollbar" style={{ direction: "rtl" }}>
+                    <div className="flex items-center justify-start group w-full min-w-[700px] text-sm" style={{ direction: "ltr" }}>
+                      <AnimatePresence mode="wait">
+                        <motion.div 
+                          key={currentGithub}
+                          initial={{ opacity: 0, filter: "blur(4px)" }}
+                          animate={{ opacity: 1, filter: "blur(0px)" }}
+                          exit={{ opacity: 0, filter: "blur(4px)" }}
+                          transition={{ duration: 0.3 }}
+                          className="w-full"
+                        >
+                          <GitHubCalendar 
+                            username={currentGithub} 
+                            colorScheme={theme === "dark" ? "dark" : "light"}
+                            fontSize={12}
+                            blockSize={11}
+                            blockMargin={4}
+                            style={{ width: "100%" }}
+                          />
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </a>
               </div>
@@ -479,10 +486,10 @@ export default function Home() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-foreground">Gallery</h2>
             <div className="flex gap-1.5">
-              <button onClick={() => scrollGallery("left")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-colors">
+              <button onClick={() => scrollGallery("left")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-all cursor-pointer active:scale-90">
                 <ChevronLeft className="w-3.5 h-3.5" />
               </button>
-              <button onClick={() => scrollGallery("right")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-colors">
+              <button onClick={() => scrollGallery("right")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-all cursor-pointer active:scale-90">
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -493,7 +500,7 @@ export default function Home() {
               <button
                 key={i}
                 onClick={() => setModalIndex(i)}
-                className="w-[240px] sm:w-[300px] shrink-0 snap-start rounded-xl overflow-hidden border border-border/50 group focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-[240px] sm:w-[300px] shrink-0 snap-start rounded-xl overflow-hidden border border-border/50 group focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer active:scale-[0.98] transition-transform"
               >
                 <div className="aspect-[4/3] overflow-hidden relative">
                   <img src={img.src} alt={img.caption} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />

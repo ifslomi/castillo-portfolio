@@ -37,7 +37,7 @@ import gallery5 from "@/assets/images/gallery-5.png";
 export const PORTFOLIO_DATA = {
   personal: {
     name: "James Matthew Castillo",
-    location: "Calaca, Batangas, Philippines",
+    location: "Batangas, Philippines",
     email: "jamesmatthewcastillo4@gmail.com",
     phone: "+63 960 381 8382",
     linkedin: "https://www.linkedin.com/in/ifsjames/",
@@ -64,12 +64,21 @@ export const PORTFOLIO_DATA = {
     "Currently, I'm diving deep into cloud architecture with AWS, constantly exploring modern development tools like React, Next.js, and Node.js. Always eager to learn and adapt, I'm looking forward to delivering high-quality solutions for future clients.",
   ],
 
-  techStack: {
-    languages: ["JavaScript", "TypeScript", "PHP", "Python", "Java", "C++"],
-    frontend: ["HTML", "CSS", "React", "Next.js", "Tailwind CSS", "Bootstrap", "Vite.js"],
-    backend: ["Node.js", "Express", "Laravel", "RESTful APIs"],
-    databases: ["PostgreSQL", "MySQL", "MongoDB", "Supabase"],
-    tools: ["Git", "GitHub", "Vercel", "Figma", "AWS", "Google Cloud", "Firebase"],
+  expertTechStack: {
+    "Frontend": ["JavaScript", "TypeScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS", "Vite.js", "Bootstrap"],
+    "Backend": ["Node.js", "Express.js", "Laravel"],
+    "Databases": ["Supabase", "Firestore", "PostgreSQL"],
+    "Tools & Cloud": ["Git", "GitHub", "Google Cloud", "Vercel", "Firebase"],
+  },
+
+  allTechStack: {
+    "Frontend": ["JavaScript", "TypeScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS", "Bootstrap", "Vite.js", "Prettier", "ESLint"],
+    "Mobile": ["React Native", "Flutter"],
+    "Backend": ["Node.js", "Express.js", "PHP", "Laravel", "Python", "Java", "C++", "RESTful APIs", "OAuth"],
+    "Databases": ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Firestore"],
+    "DevOps & Cloud": ["AWS", "Google Cloud", "Firebase", "Vercel", "Docker", "GitLab CLI"],
+    "Developer Tools": ["Git", "GitHub", "GitLab", "VS Code", "PyCharm", "Replit", "Figma"],
+    "AI & Collaboration": ["Antigravity", "Claude Code", "Copilot", "Gemini", "ChatGPT", "Stitch", "Slack", "Discord", "Teams", "Trello"]
   },
 
   projects: [

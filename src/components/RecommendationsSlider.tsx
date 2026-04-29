@@ -49,7 +49,7 @@ export function RecommendationsSlider() {
             <button
               key={i}
               onClick={() => goTo(i)}
-              className={`h-1.5 rounded-full transition-all ${
+              className={`h-1.5 rounded-full transition-all cursor-pointer ${
                 i === index ? "w-5 bg-foreground" : "w-1.5 bg-border hover:bg-muted-foreground/50"
               }`}
               aria-label={`Go to recommendation ${i + 1}`}
@@ -60,14 +60,14 @@ export function RecommendationsSlider() {
         <div className="flex gap-1.5">
           <button
             onClick={() => goTo(index - 1)}
-            className="w-7 h-7 rounded-full border border-border/60 flex items-center justify-center hover:bg-background transition-colors"
+            className="w-7 h-7 rounded-full border border-border/60 flex items-center justify-center hover:bg-background transition-all cursor-pointer active:scale-90"
             aria-label="Previous recommendation"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => goTo(index + 1)}
-            className="w-7 h-7 rounded-full border border-border/60 flex items-center justify-center hover:bg-background transition-colors"
+            className="w-7 h-7 rounded-full border border-border/60 flex items-center justify-center hover:bg-background transition-all cursor-pointer active:scale-90"
             aria-label="Next recommendation"
           >
             <ChevronRight className="w-3.5 h-3.5" />
