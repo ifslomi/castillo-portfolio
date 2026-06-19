@@ -61,7 +61,7 @@ export const PORTFOLIO_DATA = {
   about: [
     "I am a passionate full-stack web developer and an experienced freelancer. My journey in tech started with a deep curiosity for how things work on the web, which has evolved into building complete, production-ready applications for clients.",
     "Through my freelance client work, I've gained hands-on experience designing responsive user interfaces, engineering robust backend systems, and implementing real-time features. I thrive on creating clean, intuitive experiences that solve real business problems, having built digital ordering systems, booking platforms, and corporate websites.",
-    "Currently, I'm diving deep into cloud architecture with AWS, constantly exploring modern development tools like React, Next.js, and Node.js. Always eager to learn and adapt, I'm looking forward to delivering high-quality solutions for future clients.",
+    "Currently, I'm diving deep into cloud architecture with AWS while exploring modern development tools like React, Next.js, and Node.js. I also use AI-assisted tools like Copilot, Claude Code, and Codex to ship faster, catch bugs earlier, optimize workflows, and refine solutions more efficiently. Always eager to learn and adapt, I'm looking forward to delivering high-quality solutions for future clients.",
   ],
 
   expertTechStack: {

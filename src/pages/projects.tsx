@@ -30,7 +30,7 @@ export default function Projects() {
           transition={{ duration: 0.5 }}
           className="text-sm text-muted-foreground max-w-2xl mb-8"
         >
-          A comprehensive list of web applications, platforms, and tools I've built or contributed to.
+          A comprehensive list of web applications, platforms, and tools I've built or contributed to. If you'd like access to a private project, email me and I can let you try it.
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
