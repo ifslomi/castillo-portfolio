@@ -189,6 +189,7 @@ export default function Home() {
   const prevGithub = () => setGithubIndex((prev) => (prev - 1 + githubAccounts.length) % githubAccounts.length);
 
   const { personal, highlightPill, about, expertTechStack, projects, experience } = PORTFOLIO_DATA;
+  const showGallery = false;
 
   const scrollGallery = (direction: "left" | "right") => {
     if (!galleryRef.current) return;
@@ -481,35 +482,36 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Gallery */}
-        <section className="mt-16 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-foreground">Gallery</h2>
-            <div className="flex gap-1.5">
-              <button onClick={() => scrollGallery("left")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-all cursor-pointer active:scale-90">
-                <ChevronLeft className="w-3.5 h-3.5" />
-              </button>
-              <button onClick={() => scrollGallery("right")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-all cursor-pointer active:scale-90">
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+        {showGallery && (
+          <section className="mt-16 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-foreground">Gallery</h2>
+              <div className="flex gap-1.5">
+                <button onClick={() => scrollGallery("left")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-all cursor-pointer active:scale-90">
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button onClick={() => scrollGallery("right")} className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center hover:bg-secondary transition-all cursor-pointer active:scale-90">
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div ref={galleryRef} className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3">
-            {PORTFOLIO_DATA.gallery.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setModalIndex(i)}
-                className="w-[240px] sm:w-[300px] shrink-0 snap-start rounded-xl overflow-hidden border border-border/50 group focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer active:scale-[0.98] transition-transform"
-              >
-                <div className="aspect-[4/3] overflow-hidden relative">
-                  <img src={img.src} alt={img.caption} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                </div>
-              </button>
-            ))}
-          </div>
-        </section>
+            <div ref={galleryRef} className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-3">
+              {PORTFOLIO_DATA.gallery.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setModalIndex(i)}
+                  className="w-[240px] sm:w-[300px] shrink-0 snap-start rounded-xl overflow-hidden border border-border/50 group focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer active:scale-[0.98] transition-transform"
+                >
+                  <div className="aspect-[4/3] overflow-hidden relative">
+                    <img src={img.src} alt={img.caption} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Contact Block */}
         <ContactBlock />
@@ -632,7 +634,7 @@ export default function Home() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {modalIndex !== null && (
+        {showGallery && modalIndex !== null && (
           <GalleryModal index={modalIndex} onClose={closeModal} onPrev={prevImage} onNext={nextImage} />
         )}
       </AnimatePresence>

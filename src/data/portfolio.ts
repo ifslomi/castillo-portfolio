@@ -83,6 +83,17 @@ export const PORTFOLIO_DATA = {
 
   projects: [
     {
+      id: "eeasypdf",
+      title: "EEasyPDF",
+      description:
+        "A free online PDF tool for converting images to PDF, merging PDFs, splitting PDFs, and exporting PDF pages as images privately in your browser.",
+      tools: ["React", "Next.js", "Google Cloud"],
+      image: null,
+      domain: "eeasypdf.vercel.app",
+      link: "https://eeasypdf.vercel.app/",
+      featured: false,
+    },
+    {
       id: "decoblu-usa",
       title: "DecoBlu USA Website",
       description:
