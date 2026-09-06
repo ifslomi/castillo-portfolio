@@ -65,14 +65,18 @@ export const PORTFOLIO_DATA = {
   ],
 
   expertTechStack: {
-    "Frontend": ["JavaScript", "TypeScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS", "Vite.js", "Bootstrap"],
+    "Frontend": ["JavaScript", "TypeScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS", "Vite.js", "Bootstrap", "Shopify Liquid"],
     "Backend": ["Node.js", "Express.js", "Laravel"],
     "Databases": ["Supabase", "Firestore", "PostgreSQL"],
-    "Tools & Cloud": ["Git", "GitHub", "Google Cloud", "Vercel", "Firebase"],
+    "E-commerce": ["Shopify", "Shopify Online Store 2.0", "Shopify Theme Development", "Shopify Admin", "Product Listings", "Collections", "Subscriptions", "POS Extensions", "Product Metafields"],
+    "SEO & Growth": ["Technical SEO", "On-page SEO", "Product SEO", "Metadata", "Structured Data", "Conversion Optimization"],
+    "Tools & Cloud": ["Git", "GitHub", "Google Cloud", "Vercel", "Firebase", "Shopify CLI", "Figma"],
   },
 
   allTechStack: {
-    "Frontend": ["JavaScript", "TypeScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS", "Bootstrap", "Vite.js", "Prettier", "ESLint"],
+    "Frontend": ["JavaScript", "TypeScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS", "Bootstrap", "Vite.js", "Shopify Liquid", "Prettier", "ESLint"],
+    "E-commerce & Shopify": ["Shopify", "Shopify Liquid", "Shopify Online Store 2.0", "Shopify Theme Development", "Shopify Theme Editor", "Shopify Admin", "Shopify CLI", "JSON Templates", "JSON Section Schemas", "Shopify Admin GraphQL API", "Shopify POS UI Extensions", "POS Extensions", "Preact", "Product Listings", "Product Metafields", "Collections", "Subscriptions", "BookThatApp", "Servv"],
+    "SEO & Product Growth": ["Technical SEO", "On-page SEO", "Product SEO", "Keyword Research", "Metadata", "Structured Data", "Product Categorization", "Conversion Optimization", "Content Optimization"],
     "Mobile": ["React Native", "Flutter"],
     "Backend": ["Node.js", "Express.js", "PHP", "Laravel", "Python", "Java", "C++", "RESTful APIs", "OAuth"],
     "Databases": ["PostgreSQL", "MySQL", "MongoDB", "Supabase", "Firestore"],
@@ -83,12 +87,96 @@ export const PORTFOLIO_DATA = {
 
   projects: [
     {
+      id: "lala-loo",
+      title: "LALA LOO Shopify E-commerce Website",
+      description:
+        "Custom Shopify storefront for an Australian toilet paper brand supporting the music industry. Built responsive product, trade and wholesale, subscription, festival, venue, and interactive carousel experiences while extending the Shapes theme architecture.",
+      tools: [
+        "Shopify Liquid",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "JSON Section Schemas",
+        "Shopify Online Store 2.0",
+        "Shopify CLI",
+        "Figma",
+      ],
+      image: null,
+      imageGallery: [
+        "https://i.imgur.com/QtpV4gb.png",
+        "https://i.imgur.com/gduCmxb.png",
+        "https://i.imgur.com/rN1f2dz.png",
+      ],
+      domain: "lalaloo.com.au",
+      link: "https://lalaloo.com.au/",
+      hideIframe: true,
+      featured: false,
+    },
+    {
+      id: "gloopii",
+      title: "Gloopii Shopify Store & POS Add-ons",
+      description:
+        "Custom Shopify storefront for Gloopii, a colorful slime and experiences brand. Built branded product, collection, booking, contact, and content pages with metafield-powered product add-ons, plus a native Shopify POS extension for in-store extras.",
+      tools: [
+        "Shopify Liquid",
+        "HTML5",
+        "CSS3",
+        "Vanilla JavaScript",
+        "Shopify Online Store 2.0",
+        "JSON Templates",
+        "Shopify Theme Editor",
+        "Admin GraphQL API",
+        "Shopify POS UI Extensions",
+        "Preact",
+        "Product Metafields",
+        "BookThatApp",
+        "Servv",
+      ],
+      image: null,
+      imageGallery: [
+        "https://i.imgur.com/PYK08Vk.png",
+        "https://i.imgur.com/S2XdKnE.png",
+      ],
+      domain: "gloopii.com",
+      link: "https://gloopii.com/",
+      hideIframe: true,
+      featured: false,
+    },
+    {
+      id: "slimeatory",
+      title: "Slimeatory",
+      description:
+        "Playful and responsive Shopify e-commerce website for a US-based slime brand. Redesigned with customizable sections, interactive experiences, and a consistent visual system to improve shopping across all devices.",
+      tools: [
+        "Shopify Liquid",
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "JSON",
+        "Shopify Online Store 2.0",
+        "Shopify CLI",
+      ],
+      image: null,
+      imageGallery: [
+        "https://i.imgur.com/4bw4hkD.png",
+        "https://i.imgur.com/b6CMgKm.png",
+      ],
+      domain: "slimeatory.com",
+      link: "https://slimeatory.com/",
+      hideIframe: true,
+      featured: false,
+    },
+    {
       id: "eeasypdf",
       title: "EEasyPDF",
       description:
         "A free online PDF tool for converting images to PDF, merging PDFs, splitting PDFs, and exporting PDF pages as images privately in your browser.",
       tools: ["React", "Next.js", "Google Cloud"],
       image: null,
+      imageGallery: [
+        "https://i.imgur.com/LHoR8qj.png",
+        "https://i.imgur.com/xef9Ed0.png",
+      ],
       domain: "eeasypdf.vercel.app",
       link: "https://eeasypdf.vercel.app/",
       featured: false,
@@ -100,6 +188,7 @@ export const PORTFOLIO_DATA = {
         "Modern architectural surface solutions website for an international US-based client. Focused on minimal and clean UI for better brand presentation.",
       tools: ["React", "Vite.js"],
       image: project1,
+      imageGallery: ["https://i.imgur.com/JgPEOPO.png"],
       domain: "decobluusa.com",
       link: "https://decobluusa.com/",
       featured: true,
@@ -111,6 +200,10 @@ export const PORTFOLIO_DATA = {
         "Real-time FTP file sync transcription dashboard. Built a flexible file explorer to manage and organize transcription files efficiently.",
       tools: ["React", "Vite.js", "Firebase", "Express.js", "Vercel"],
       image: project2,
+      imageGallery: [
+        "https://i.imgur.com/NLNcK76.png",
+        "https://i.imgur.com/YKIofOf.png",
+      ],
       domain: "digiscribeasiapacific.com",
       link: "https://digiscribeasiapacific.com/",
       featured: true,
@@ -122,6 +215,11 @@ export const PORTFOLIO_DATA = {
         "Real-time property availability map system developed during my Digiscribe Internship. Built an admin dashboard to manage listings, pricing, and property details efficiently.",
       tools: ["React", "Vite.js", "Firebase", "Express.js", "Vercel"],
       image: project3,
+      imageGallery: [
+        "https://i.imgur.com/CdhtoaB.png",
+        "https://i.imgur.com/h8Z0kbo.png",
+        "https://i.imgur.com/37bYvRY.png",
+      ],
       domain: "vicmarhomes.com",
       link: "http://vicmarhomes.com",
       hideIframe: true,
@@ -134,6 +232,12 @@ export const PORTFOLIO_DATA = {
         "Digital ordering system for university foodhub (Capstone Project). Improved ordering process by digitizing menu, checkout, and vouchers.",
       tools: ["React", "Vite.js", "Firebase", "Node.js"],
       image: project4,
+      imageGallery: [
+        "https://i.imgur.com/jMUG17N.png",
+        "https://i.imgur.com/myUE7GI.png",
+        "https://i.imgur.com/WpKRfSd.png",
+        "https://i.imgur.com/LHPNC1f.png",
+      ],
       domain: "ubianfoodhub.web.app",
       link: "https://ubianfoodhub.web.app",
       featured: true,
@@ -145,6 +249,13 @@ export const PORTFOLIO_DATA = {
         "Real-time booking and walk-in management, reducing scheduling conflicts and improving customer flow.",
       tools: ["React", "Vite.js", "Firebase", "Node.js"],
       image: null,
+      imageGallery: [
+        "https://i.imgur.com/rJQIbTz.png",
+        "https://i.imgur.com/GR5bGkJ.png",
+        "https://i.imgur.com/7tMUY5K.png",
+        "https://i.imgur.com/ZXXidc4.png",
+        "https://i.imgur.com/fUaEi5G.png",
+      ],
       domain: "rk-barber.vercel.app",
       link: "https://rk-barber.vercel.app/",
       featured: false,
@@ -156,6 +267,10 @@ export const PORTFOLIO_DATA = {
         "One-click editable portfolio system allowing non-technical users to edit content easily.",
       tools: ["React", "Vite.js", "Firebase", "Vercel"],
       image: null,
+      imageGallery: [
+        "https://i.imgur.com/Stt1SRM.png",
+        "https://i.imgur.com/raSnKKv.png",
+      ],
       domain: "katdworks.vercel.app",
       link: "https://katdworks.vercel.app/",
       featured: false,
@@ -167,6 +282,7 @@ export const PORTFOLIO_DATA = {
         "JSON-driven driving exam practice to help users prepare for LTO driving license exams.",
       tools: ["HTML", "CSS", "Firebase"],
       image: null,
+      imageGallery: ["https://i.imgur.com/yD9Ulic.png"],
       domain: "driving-5488c.web.app",
       link: "https://driving-5488c.web.app/",
       featured: false,
@@ -175,28 +291,40 @@ export const PORTFOLIO_DATA = {
 
   experience: [
     {
-      id: "freelance-2023",
-      title: "Freelance Full-Stack Web Developer",
-      company: "Personal & Client Projects",
-      period: "Jan 2023 – Present",
-      description: [
-        "Developed and deployed multiple web applications including ordering systems, booking systems, and business websites using modern technologies.",
-        "Built responsive user interfaces and implemented real-time features such as live updates and dashboards.",
-        "Integrated backend services including authentication, databases, and APIs using Firebase and Node.js.",
-        "Worked with clients to design and deliver clean, user-friendly, and functional websites based on requirements.",
-        "Deployed applications using Vercel and managed version control using GitHub.",
-      ],
-    },
-    {
-      id: "intern-2026",
+      id: "digiscribe-2026",
       title: "Full Stack Web Developer Intern",
       company: "Digiscribe Transcription Corp.",
       period: "Feb 2026 – May 2026",
       description: [
-        "Contributed to the development of a real-time FTP file sync transcription dashboard, streamlining file organization and access.",
-        "Assisted in building a flexible file explorer interface using React and Vite.js to efficiently manage transcription files.",
-        "Collaborated on integrating Firebase and Express.js backend services to ensure secure and seamless real-time data flow.",
-        "Participated in deploying and testing the application on Vercel, ensuring high availability and robust performance for end-users.",
+        "Built a real-time transcription management system using React, Firebase, and Express, reducing manual file handling by approximately 40%.",
+        "Developed the Vicmar Homes real estate system for managing more than 30 property listings, improving visibility and inquiries.",
+        "Implemented role-based dashboards and a flexible file explorer supporting more than 10 users and improving workflow efficiency.",
+        "Architected and deployed split hosting with the frontend on Supreme Host Center and the backend on Vercel, improving scalability and reliability.",
+      ],
+    },
+    {
+      id: "slimeatory-2026",
+      title: "E-Commerce Web Developer / Shopify SEO Specialist (Part-Time)",
+      company: "Slimeatory",
+      period: "Jan 2026 – Jun 2026",
+      description: [
+        "Developed and customized Shopify theme sections, templates, navigation menus, and page layouts using Liquid, JSON, HTML, CSS, and JavaScript.",
+        "Optimized product and page SEO, including SEO titles, meta descriptions, product descriptions, tags, and backend content for better search visibility.",
+        "Improved Shopify storefront usability by fixing layout issues, dropdown menus, headers, product pricing display, and responsive design problems.",
+        "Coordinated with team members on product images, newsletter assets, content updates, and Shopify development tasks through Slack and Trello.",
+        "Audited store structure, product listings, out-of-stock products, and navigation flow to support better user experience and SEO performance.",
+      ],
+    },
+    {
+      id: "freelance-2023",
+      title: "Full-Stack Web Developer",
+      company: "Freelance",
+      period: "Jan 2023 – Apr 2026",
+      description: [
+        "Delivered more than five full-stack systems, including booking, ordering, and business platforms used by real users and clients.",
+        "Built responsive user interfaces and real-time features that improved usability and engagement.",
+        "Developed backend systems with authentication, CRUD operations, and REST API integrations using Node.js and Firebase.",
+        "Deployed applications through Vercel and GitHub, ensuring fast and reliable delivery.",
       ],
     },
   ],
@@ -234,6 +362,27 @@ export const PORTFOLIO_DATA = {
   ],
 
   recommendations: [
+    {
+      id: "rec-7",
+      quote:
+        "The LALA LOO website is amazing and fantastic. Everything works smoothly and looks exactly like the Figma design, which made the final result feel both polished and true to the original vision.",
+      author: "LALA LOO Client",
+      role: "Shopify Client",
+    },
+    {
+      id: "rec-6",
+      quote:
+        "The Gloopii website is looking fantastic and really vibes well for a kids-to-adults experience. James created a colorful, engaging storefront that feels welcoming for everyone.",
+      author: "Paul",
+      role: "Gloopii Client",
+    },
+    {
+      id: "rec-5",
+      quote:
+        "The new Slimeatory website is looking great. James brought the brand to life with a playful, responsive experience that feels polished and easy to shop across devices.",
+      author: "Paul",
+      role: "Slimeatory Client",
+    },
     {
       id: "rec-1",
       quote:

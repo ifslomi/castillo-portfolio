@@ -6,7 +6,7 @@ import { Link } from "wouter";
 import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function TechStack() {
+export default function Skills() {
   return (
     <PageTransition className="min-h-screen bg-background flex flex-col">
       <div className="max-w-4xl mx-auto px-5 pt-8 pb-16 md:pt-14 flex-1 w-full">
@@ -16,7 +16,7 @@ export default function TechStack() {
             <Link href="/" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-colors group">
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
             </Link>
-            <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground">All Tech Stack</h1>
+            <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground">Skills &amp; Expertise</h1>
           </div>
           <ThemeToggle />
         </div>

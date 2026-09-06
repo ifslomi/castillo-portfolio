@@ -10,7 +10,7 @@ import Home from "@/pages/home";
 import Projects from "@/pages/projects";
 import Certifications from "@/pages/certifications";
 import Experience from "@/pages/experience";
-import TechStack from "@/pages/tech";
+import Skills from "@/pages/tech";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +22,8 @@ function Router() {
         <Route path="/projects" component={Projects} />
         <Route path="/certifications" component={Certifications} />
         <Route path="/experience" component={Experience} />
-        <Route path="/tech" component={TechStack} />
+        <Route path="/skills" component={Skills} />
+        <Route path="/tech" component={Skills} />
         <Route component={NotFound} />
       </Switch>
     </AnimatePresence>

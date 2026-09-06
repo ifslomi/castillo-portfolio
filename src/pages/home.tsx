@@ -23,6 +23,8 @@ import {
   BadgeCheck,
   X,
   ExternalLink,
+  Images,
+  Monitor,
 } from "lucide-react";
 
 function EngineerCard() {
@@ -180,6 +182,8 @@ export default function Home() {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_DATA.projects[0] | null>(null);
+  const [projectPreviewTab, setProjectPreviewTab] = useState<"images" | "live">("images");
+  const [projectImageIndex, setProjectImageIndex] = useState(0);
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [githubIndex, setGithubIndex] = useState(0);
   const githubAccounts = ["ifjames", "ifslomi", "ifsunreal"];
@@ -206,7 +210,13 @@ export default function Home() {
     [],
   );
 
-  const featuredProjects = projects.filter((p) => p.featured).slice(0, 4);
+  const recentProjects = projects.slice(0, 4);
+
+  const openProject = (project: typeof PORTFOLIO_DATA.projects[0]) => {
+    setSelectedProject(project);
+    setProjectPreviewTab("images");
+    setProjectImageIndex(0);
+  };
 
   return (
     <PageTransition className="relative min-h-screen bg-background">
@@ -298,12 +308,12 @@ export default function Home() {
               </div>
             </motion.section>
 
-            {/* Tech Stack */}
+            {/* Skills */}
             <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative pl-5 border-l-2 border-border/50">
               <div className="absolute top-0 -left-[2px] w-[2px] h-6 bg-primary rounded-full shadow-[0_0_8px_rgba(var(--primary),0.8)]" />
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-foreground tracking-tight">Tech Stack</h2>
-                <Link href="/tech" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group">
+                <h2 className="text-xl font-bold text-foreground tracking-tight">Skills</h2>
+                <Link href="/skills" className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 group">
                   View All <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -332,12 +342,24 @@ export default function Home() {
                 </Link>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {featuredProjects.map((project) => (
+                {recentProjects.map((project) => (
                   <button
                     key={project.id}
-                    onClick={() => setSelectedProject(project)}
-                    className="group relative block p-4 rounded-xl bg-card/80 backdrop-blur border border-border/60 hover:border-border hover:shadow-md transition-all hover:-translate-y-1 overflow-hidden w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-[0.98]"
+                    onClick={() => openProject(project)}
+                    className="group relative block rounded-xl bg-card/80 backdrop-blur border border-border/60 hover:border-border hover:shadow-md transition-all hover:-translate-y-1 overflow-hidden w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-[0.98]"
                   >
+                    {project.imageGallery.length > 0 && (
+                      <div className="relative aspect-[16/9] overflow-hidden bg-muted">
+                        <img
+                          src={project.imageGallery[0]}
+                          alt={`${project.title} preview`}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                      </div>
+                    )}
+                    <div className="relative p-4">
                     <div className="absolute -top-12 -right-12 w-24 h-24 rounded-full bg-primary/5 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="relative flex justify-between items-start gap-2 mb-1.5">
                       <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">{project.title}</h3>
@@ -349,6 +371,7 @@ export default function Home() {
                         {project.domain}
                       </span>
                     )}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -537,12 +560,41 @@ export default function Home() {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-[95vw] max-w-[1600px] h-[90vh] bg-card border border-border/60 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
             >
-              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border/50 shrink-0 bg-card/50 backdrop-blur z-10">
-                <div className="pr-4">
-                  <h2 className="text-lg sm:text-xl font-bold text-foreground">{selectedProject.title}</h2>
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-1.5 leading-relaxed">{selectedProject.description}</p>
+              <div className="flex flex-col gap-4 p-4 sm:p-6 border-b border-border/50 shrink-0 bg-card/50 backdrop-blur z-10">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="pr-2 min-w-0">
+                    <h2 className="text-lg sm:text-xl font-bold text-foreground">{selectedProject.title}</h2>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1.5 leading-relaxed">{selectedProject.description}</p>
+                  </div>
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="p-1.5 rounded-full hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors shrink-0"
+                    aria-label="Close project preview"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
-                <div className="flex items-center gap-3 shrink-0 ml-4">
+
+                <div className="flex items-center justify-between gap-3">
+                  <div className="inline-flex rounded-lg border border-border/60 bg-secondary/50 p-1" role="tablist" aria-label="Project preview mode">
+                    <button
+                      onClick={() => setProjectPreviewTab("images")}
+                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${projectPreviewTab === "images" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                      role="tab"
+                      aria-selected={projectPreviewTab === "images"}
+                    >
+                      <Images className="h-3.5 w-3.5" /> Images
+                    </button>
+                    <button
+                      onClick={() => setProjectPreviewTab("live")}
+                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${projectPreviewTab === "live" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                      role="tab"
+                      aria-selected={projectPreviewTab === "live"}
+                    >
+                      <Monitor className="h-3.5 w-3.5" /> Live
+                    </button>
+                  </div>
+
                   {selectedProject.link && (
                     <a
                       href={selectedProject.link}
@@ -553,17 +605,55 @@ export default function Home() {
                       Visit Site <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   )}
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="p-1.5 rounded-full hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors shrink-0"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
                 </div>
               </div>
 
               <div className="flex-1 bg-muted/30 relative w-full h-full overflow-hidden">
-                {selectedProject.link && !(selectedProject as any).hideIframe ? (
+                {projectPreviewTab === "images" ? (
+                  <div className="h-full w-full overflow-y-auto p-4 sm:p-6">
+                    <div className="mx-auto flex min-h-full max-w-6xl flex-col gap-4">
+                      <div className="relative flex min-h-[260px] flex-1 items-center justify-center overflow-hidden rounded-xl border border-border/60 bg-background/70 p-2 sm:p-4">
+                        <img
+                          src={selectedProject.imageGallery[projectImageIndex]}
+                          alt={`${selectedProject.title} screenshot ${projectImageIndex + 1}`}
+                          className="max-h-[58vh] w-full object-contain"
+                        />
+                        {selectedProject.imageGallery.length > 1 && (
+                          <>
+                            <button
+                              onClick={() => setProjectImageIndex((index) => (index - 1 + selectedProject.imageGallery.length) % selectedProject.imageGallery.length)}
+                              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/85 text-foreground shadow-md backdrop-blur transition-colors hover:bg-background"
+                              aria-label="Previous project image"
+                            >
+                              <ChevronLeft className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => setProjectImageIndex((index) => (index + 1) % selectedProject.imageGallery.length)}
+                              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/85 text-foreground shadow-md backdrop-blur transition-colors hover:bg-background"
+                              aria-label="Next project image"
+                            >
+                              <ChevronRight className="h-4 w-4" />
+                            </button>
+                          </>
+                        )}
+                      </div>
+                      {selectedProject.imageGallery.length > 1 && (
+                        <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Project screenshots">
+                          {selectedProject.imageGallery.map((image, index) => (
+                            <button
+                              key={image}
+                              onClick={() => setProjectImageIndex(index)}
+                              className={`h-16 w-24 shrink-0 overflow-hidden rounded-md border-2 transition-colors sm:h-20 sm:w-32 ${index === projectImageIndex ? "border-primary" : "border-border/60 hover:border-border"}`}
+                              aria-label={`View project image ${index + 1}`}
+                            >
+                              <img src={image} alt="" className="h-full w-full object-cover" loading="lazy" />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : selectedProject.link && !(selectedProject as any).hideIframe ? (
                   <iframe
                     src={selectedProject.link}
                     title={selectedProject.title}

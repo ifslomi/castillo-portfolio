@@ -3,12 +3,20 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { PORTFOLIO_DATA } from "@/data/portfolio";
 import { Footer } from "@/components/Footer";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowRight, X, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, X, ExternalLink, Images, Monitor, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_DATA.projects[0] | null>(null);
+  const [activeTab, setActiveTab] = useState<"images" | "live">("images");
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  const openProject = (project: typeof PORTFOLIO_DATA.projects[0]) => {
+    setSelectedProject(project);
+    setActiveTab("images");
+    setActiveImageIndex(0);
+  };
 
   return (
     <PageTransition className="min-h-screen bg-background">
@@ -42,8 +50,24 @@ export default function Projects() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: index * 0.04 }}
             >
-              <button onClick={() => setSelectedProject(project)} className="group block h-full w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl">
+              <button onClick={() => openProject(project)} className="group block h-full w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl">
                 <div className="relative h-full rounded-xl bg-card p-5 border border-border/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-border overflow-hidden">
+                  {project.imageGallery.length > 0 && (
+                    <div className="relative -mx-5 -mt-5 mb-5 aspect-[16/9] overflow-hidden bg-muted">
+                      <img
+                        src={project.imageGallery[0]}
+                        alt={`${project.title} preview`}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                      {project.imageGallery.length > 1 && (
+                        <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-md bg-black/55 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
+                          <Images className="h-3 w-3" /> {project.imageGallery.length} images
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <h3 className="font-semibold text-base text-foreground group-hover:text-primary transition-colors">{project.title}</h3>
                     <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 -translate-x-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary shrink-0" />
@@ -84,12 +108,42 @@ export default function Projects() {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-[95vw] max-w-[1600px] h-[90vh] bg-card border border-border/60 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
             >
-              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border/50 shrink-0 bg-card/50 backdrop-blur z-10">
-                <div className="pr-4">
+              <div className="flex flex-col gap-4 p-4 sm:p-6 border-b border-border/50 shrink-0 bg-card/50 backdrop-blur z-10">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="pr-2 min-w-0">
                   <h2 className="text-lg sm:text-xl font-bold text-foreground">{selectedProject.title}</h2>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1.5 leading-relaxed">{selectedProject.description}</p>
+                  </div>
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="p-1.5 rounded-full hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors shrink-0"
+                    aria-label="Close project preview"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
-                <div className="flex items-center gap-3 shrink-0 ml-4">
+
+                <div className="flex items-center justify-between gap-3">
+                  <div className="inline-flex rounded-lg border border-border/60 bg-secondary/50 p-1" role="tablist" aria-label="Project preview mode">
+                    <button
+                      onClick={() => setActiveTab("images")}
+                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${activeTab === "images" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                      role="tab"
+                      aria-selected={activeTab === "images"}
+                    >
+                      <Images className="h-3.5 w-3.5" /> Images
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("live")}
+                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${activeTab === "live" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+                      role="tab"
+                      aria-selected={activeTab === "live"}
+                    >
+                      <Monitor className="h-3.5 w-3.5" /> Live
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-3 shrink-0">
                   {selectedProject.link && (
                     <a
                       href={selectedProject.link}
@@ -100,17 +154,56 @@ export default function Projects() {
                       Visit Site <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   )}
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="p-1.5 rounded-full hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors shrink-0"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+                  </div>
                 </div>
               </div>
 
               <div className="flex-1 bg-muted/30 relative w-full h-full overflow-hidden">
-                {selectedProject.link && !(selectedProject as any).hideIframe ? (
+                {activeTab === "images" ? (
+                  <div className="h-full w-full overflow-y-auto p-4 sm:p-6">
+                    <div className="mx-auto flex min-h-full max-w-6xl flex-col gap-4">
+                      <div className="relative flex min-h-[260px] flex-1 items-center justify-center overflow-hidden rounded-xl border border-border/60 bg-background/70 p-2 sm:p-4">
+                        <img
+                          src={selectedProject.imageGallery[activeImageIndex]}
+                          alt={`${selectedProject.title} screenshot ${activeImageIndex + 1}`}
+                          className="max-h-[58vh] w-full object-contain"
+                        />
+                        {selectedProject.imageGallery.length > 1 && (
+                          <>
+                            <button
+                              onClick={() => setActiveImageIndex((index) => (index - 1 + selectedProject.imageGallery.length) % selectedProject.imageGallery.length)}
+                              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/85 text-foreground shadow-md backdrop-blur transition-colors hover:bg-background"
+                              aria-label="Previous project image"
+                            >
+                              <ChevronLeft className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => setActiveImageIndex((index) => (index + 1) % selectedProject.imageGallery.length)}
+                              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/85 text-foreground shadow-md backdrop-blur transition-colors hover:bg-background"
+                              aria-label="Next project image"
+                            >
+                              <ChevronRight className="h-4 w-4" />
+                            </button>
+                          </>
+                        )}
+                      </div>
+                      {selectedProject.imageGallery.length > 1 && (
+                        <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Project screenshots">
+                          {selectedProject.imageGallery.map((image, index) => (
+                            <button
+                              key={image}
+                              onClick={() => setActiveImageIndex(index)}
+                              className={`h-16 w-24 shrink-0 overflow-hidden rounded-md border-2 transition-colors sm:h-20 sm:w-32 ${index === activeImageIndex ? "border-primary" : "border-border/60 hover:border-border"}`}
+                              aria-label={`View project image ${index + 1}`}
+                            >
+                              <img src={image} alt="" className="h-full w-full object-cover" loading="lazy" />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : selectedProject.link && !(selectedProject as any).hideIframe ? (
                   <iframe
                     src={selectedProject.link}
                     title={selectedProject.title}
