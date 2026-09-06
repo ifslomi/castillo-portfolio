@@ -7,6 +7,7 @@ import { AvatarSwitcher } from "@/components/AvatarSwitcher";
 import { BackgroundDecor } from "@/components/BackgroundDecor";
 import { RecommendationsSlider } from "@/components/RecommendationsSlider";
 import { ContactBlock } from "@/components/ContactBlock";
+import { ProjectPreviewModal } from "@/components/ProjectPreviewModal";
 import { Link } from "wouter";
 import { GitHubCalendar } from "react-github-calendar";
 import { useTheme } from "next-themes";
@@ -23,8 +24,6 @@ import {
   BadgeCheck,
   X,
   ExternalLink,
-  Images,
-  Monitor,
 } from "lucide-react";
 
 function EngineerCard() {
@@ -182,8 +181,6 @@ export default function Home() {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof PORTFOLIO_DATA.projects[0] | null>(null);
-  const [projectPreviewTab, setProjectPreviewTab] = useState<"images" | "live">("images");
-  const [projectImageIndex, setProjectImageIndex] = useState(0);
   const [showResumeModal, setShowResumeModal] = useState(false);
   const [githubIndex, setGithubIndex] = useState(0);
   const githubAccounts = ["ifjames", "ifslomi", "ifsunreal"];
@@ -211,12 +208,6 @@ export default function Home() {
   );
 
   const recentProjects = projects.slice(0, 4);
-
-  const openProject = (project: typeof PORTFOLIO_DATA.projects[0]) => {
-    setSelectedProject(project);
-    setProjectPreviewTab("images");
-    setProjectImageIndex(0);
-  };
 
   return (
     <PageTransition className="relative min-h-screen bg-background">
@@ -345,7 +336,7 @@ export default function Home() {
                 {recentProjects.map((project) => (
                   <button
                     key={project.id}
-                    onClick={() => openProject(project)}
+                    onClick={() => setSelectedProject(project)}
                     className="group relative block rounded-xl bg-card/80 backdrop-blur border border-border/60 hover:border-border hover:shadow-md transition-all hover:-translate-y-1 overflow-hidden w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-[0.98]"
                   >
                     {project.imageGallery.length > 0 && (
@@ -543,135 +534,7 @@ export default function Home() {
 
       <Footer />
 
-      {/* Project Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-background/80 backdrop-blur-sm"
-              onClick={() => setSelectedProject(null)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-[95vw] max-w-[1600px] h-[90vh] bg-card border border-border/60 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
-            >
-              <div className="flex flex-col gap-4 p-4 sm:p-6 border-b border-border/50 shrink-0 bg-card/50 backdrop-blur z-10">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="pr-2 min-w-0">
-                    <h2 className="text-lg sm:text-xl font-bold text-foreground">{selectedProject.title}</h2>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-1.5 leading-relaxed">{selectedProject.description}</p>
-                  </div>
-                  <button
-                    onClick={() => setSelectedProject(null)}
-                    className="p-1.5 rounded-full hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors shrink-0"
-                    aria-label="Close project preview"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <div className="inline-flex rounded-lg border border-border/60 bg-secondary/50 p-1" role="tablist" aria-label="Project preview mode">
-                    <button
-                      onClick={() => setProjectPreviewTab("images")}
-                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${projectPreviewTab === "images" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                      role="tab"
-                      aria-selected={projectPreviewTab === "images"}
-                    >
-                      <Images className="h-3.5 w-3.5" /> Images
-                    </button>
-                    <button
-                      onClick={() => setProjectPreviewTab("live")}
-                      className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${projectPreviewTab === "live" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
-                      role="tab"
-                      aria-selected={projectPreviewTab === "live"}
-                    >
-                      <Monitor className="h-3.5 w-3.5" /> Live
-                    </button>
-                  </div>
-
-                  {selectedProject.link && (
-                    <a
-                      href={selectedProject.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity whitespace-nowrap"
-                    >
-                      Visit Site <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex-1 bg-muted/30 relative w-full h-full overflow-hidden">
-                {projectPreviewTab === "images" ? (
-                  <div className="h-full w-full overflow-y-auto p-4 sm:p-6">
-                    <div className="mx-auto flex min-h-full max-w-6xl flex-col gap-4">
-                      <div className="relative flex min-h-[260px] flex-1 items-center justify-center overflow-hidden rounded-xl border border-border/60 bg-background/70 p-2 sm:p-4">
-                        <img
-                          src={selectedProject.imageGallery[projectImageIndex]}
-                          alt={`${selectedProject.title} screenshot ${projectImageIndex + 1}`}
-                          className="max-h-[58vh] w-full object-contain"
-                        />
-                        {selectedProject.imageGallery.length > 1 && (
-                          <>
-                            <button
-                              onClick={() => setProjectImageIndex((index) => (index - 1 + selectedProject.imageGallery.length) % selectedProject.imageGallery.length)}
-                              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/85 text-foreground shadow-md backdrop-blur transition-colors hover:bg-background"
-                              aria-label="Previous project image"
-                            >
-                              <ChevronLeft className="h-4 w-4" />
-                            </button>
-                            <button
-                              onClick={() => setProjectImageIndex((index) => (index + 1) % selectedProject.imageGallery.length)}
-                              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-background/85 text-foreground shadow-md backdrop-blur transition-colors hover:bg-background"
-                              aria-label="Next project image"
-                            >
-                              <ChevronRight className="h-4 w-4" />
-                            </button>
-                          </>
-                        )}
-                      </div>
-                      {selectedProject.imageGallery.length > 1 && (
-                        <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Project screenshots">
-                          {selectedProject.imageGallery.map((image, index) => (
-                            <button
-                              key={image}
-                              onClick={() => setProjectImageIndex(index)}
-                              className={`h-16 w-24 shrink-0 overflow-hidden rounded-md border-2 transition-colors sm:h-20 sm:w-32 ${index === projectImageIndex ? "border-primary" : "border-border/60 hover:border-border"}`}
-                              aria-label={`View project image ${index + 1}`}
-                            >
-                              <img src={image} alt="" className="h-full w-full object-cover" loading="lazy" />
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ) : selectedProject.link && !(selectedProject as any).hideIframe ? (
-                  <iframe
-                    src={selectedProject.link}
-                    title={selectedProject.title}
-                    className="w-full h-full border-none bg-background"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground flex-col gap-3 p-6 text-center bg-card">
-                    <ExternalLink className="w-10 h-10 opacity-20 mb-2" />
-                    <h3 className="font-semibold text-foreground">Preview Not Available</h3>
-                    <p className="text-sm max-w-sm">This website has security policies that prevent it from being previewed here. Please click the button above to visit the live site directly.</p>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <ProjectPreviewModal project={selectedProject} onClose={() => setSelectedProject(null)} />
 
       {/* Resume Modal */}
       <AnimatePresence>
